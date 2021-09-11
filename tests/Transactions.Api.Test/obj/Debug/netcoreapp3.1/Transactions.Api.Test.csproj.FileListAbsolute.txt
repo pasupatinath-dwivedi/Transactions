@@ -1,0 +1,10 @@
+D:\Repos\Transactions\tests\Transactions.Api.Test\bin\Debug\netcoreapp3.1\Transactions.Api.Test.deps.json
+D:\Repos\Transactions\tests\Transactions.Api.Test\bin\Debug\netcoreapp3.1\Transactions.Api.Test.dll
+D:\Repos\Transactions\tests\Transactions.Api.Test\bin\Debug\netcoreapp3.1\Transactions.Api.Test.pdb
+D:\Repos\Transactions\tests\Transactions.Api.Test\obj\Debug\netcoreapp3.1\Transactions.Api.Test.GeneratedMSBuildEditorConfig.editorconfig
+D:\Repos\Transactions\tests\Transactions.Api.Test\obj\Debug\netcoreapp3.1\Transactions.Api.Test.AssemblyInfoInputs.cache
+D:\Repos\Transactions\tests\Transactions.Api.Test\obj\Debug\netcoreapp3.1\Transactions.Api.Test.AssemblyInfo.cs
+D:\Repos\Transactions\tests\Transactions.Api.Test\obj\Debug\netcoreapp3.1\Transactions.Api.Test.csproj.CoreCompileInputs.cache
+D:\Repos\Transactions\tests\Transactions.Api.Test\obj\Debug\netcoreapp3.1\Transactions.Api.Test.dll
+D:\Repos\Transactions\tests\Transactions.Api.Test\obj\Debug\netcoreapp3.1\Transactions.Api.Test.pdb
+D:\Repos\Transactions\tests\Transactions.Api.Test\obj\Debug\netcoreapp3.1\Transactions.Api.Test.csproj.AssemblyReference.cache
