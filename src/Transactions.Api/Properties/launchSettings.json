@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Transactions.Api": {
+      "commandName": "Project",
+      "commandLineArgs": "start --verbose"
+    }
+  }
+}

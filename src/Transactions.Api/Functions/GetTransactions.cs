@@ -7,27 +7,34 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using MediatR;
+using Transactions.Api.Query;
+using System.Threading;
 
 namespace Transactions.Api
 {
-    public static class GetTransactions
+    public class GetTransactions
     {
-        [FunctionName(nameof(GetTransactions))]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = Routes.Transactions)] HttpRequest req,
-            ILogger log)
+        private readonly IMediator _mediator;
+        private readonly ILogger _logger;
+
+        public GetTransactions(IMediator mediator, ILogger<GetTransactions> logger)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        }
 
-            string name = req.Query["name"];
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+        [FunctionName(nameof(GetTransactions))]
+        public async Task<IActionResult> Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = Routes.Transactions)] HttpRequest req,
+            
+             CancellationToken cancellationToken = default)
+        {
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            _logger.LogInformation("GetTransactions function processed a request.");
+
+            var responseMessage = await _mediator.Send(new GetTransactionsQuery(), cancellationToken);
 
             return new OkObjectResult(responseMessage);
         }
