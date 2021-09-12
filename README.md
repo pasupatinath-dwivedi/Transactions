@@ -4,6 +4,12 @@ Azure Function App to expose 3 endpoints
   2. POST  /transactions
   3. PUT /transactions/{transactionsID}
 
+ Action | Method | Route
+------------ | ------------- |--------
+Get All Transactions	|GET request. Returns success all transactions as json array.	| GET /transactions (sample url : http://localhost:7071/api/transactions)
+Crete transaction |POST request. Returns 200 OK on successful creation.| POST /transactions (sample url :  http://localhost:7071/api/transactions)
+Update a transactions |PUT request. Returns 200 OK on successful update.| PUT /transactions/{transactionID} (sample url :  http://localhost:7071/api/transactions/{transactionID})
+
 # Build and Test
 - Source code is found in the src/ folder, the main application is Transactions.Api. A solution file for Visual Studio is in the root
 - Tests are found in the tests/ folder and can be run on Visual Studio
