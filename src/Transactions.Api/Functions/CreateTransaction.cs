@@ -37,8 +37,8 @@ namespace Transactions.Api.Functions
                 return new BadRequestResult();
             }
 
-            var responseMessage = _mediator.Send(transactionCommand, cancellationToken);
-            return new OkObjectResult(responseMessage.Result);
+            var responseMessage = await _mediator.Send(transactionCommand, cancellationToken);
+            return new OkObjectResult(responseMessage);
         }
     }
 }

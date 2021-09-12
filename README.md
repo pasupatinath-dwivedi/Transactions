@@ -6,7 +6,7 @@ Azure Function App to expose 3 endpoints
 
 # Build and Test
 - Source code is found in the src/ folder, the main application is Transactions.Api. A solution file for Visual Studio is in the root
-- Tests are found in the tests/ folder and can be run with dotnet test or Visual Studio
+- Tests are found in the tests/ folder and can be run on Visual Studio
 
 ## Sample local.settings.json for debugging locally
 > The following is prepopulated with connection string for local storage and cosmos emulators
