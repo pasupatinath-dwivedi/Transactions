@@ -10,9 +10,16 @@ Get All Transactions	|GET request. Returns success all transactions as json arra
 Crete transaction |POST request. Returns 200 OK on successful creation.| POST /transactions (sample url :  http://localhost:7071/api/transactions)
 Update a transactions |PUT request. Returns 200 OK on successful update.| PUT /transactions/{transactionID} (sample url :  http://localhost:7071/api/transactions/{transactionID})
 
-# Build and Test
+## Build and Test
 - Source code is found in the src/ folder, the main application is Transactions.Api. A solution file for Visual Studio is in the root
 - Tests are found in the tests/ folder and can be run on Visual Studio
+
+## Technolgies and Libraries
+1. .net core 3.1 and Azure Functions (v3), C#
+2. MediatR, Automapper, Fluent
+3. CosmosSDK
+4. xUnit, Moq
+
 
 ## Sample local.settings.json for debugging locally
 > The following is prepopulated with connection string for local storage and cosmos emulators
