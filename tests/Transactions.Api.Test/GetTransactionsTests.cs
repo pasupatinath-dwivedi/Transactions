@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Transactions.Api.Test
+﻿namespace Transactions.Api.Test
 {
-   public class GetTransactionsTests
+    public class GetTransactionsTests
     {
 
     }

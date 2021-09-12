@@ -1,21 +1,19 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using MediatR;
-using Transactions.Api.Extensions;
-using Transactions.Api.Command;
+using System;
 using System.Threading;
+using System.Threading.Tasks;
+using Transactions.Api.Command;
+using Transactions.Api.Extensions;
 
 namespace Transactions.Api.Functions
 {
     public class UpdateTransaction
     {
-
         private readonly IMediator _mediator;
         private readonly ILogger _logger;
         public UpdateTransaction(IMediator mediator, ILogger<GetTransactions> logger)
@@ -29,7 +27,7 @@ namespace Transactions.Api.Functions
             [HttpTrigger(AuthorizationLevel.Function, "put", Route = Routes.Update)] HttpRequest req, string transactionID, CancellationToken cancellationToken)
 
         {
-            _logger.LogInformation("C# HTTP trigger function processed a request {transactionId}.", transactionID);
+            _logger.LogInformation("UpdateTransaction function processed a request {transactionId}.", transactionID);
 
             var updateTransactionCommand = req.FromBody<UpdateTransactionCommand>();
 

@@ -22,18 +22,14 @@ namespace Transactions.Api
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-
         [FunctionName(nameof(GetTransactions))]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = Routes.Transactions)] HttpRequest req,
-            
              CancellationToken cancellationToken = default)
         {
-
             _logger.LogInformation("GetTransactions function processed a request.");
 
             var responseMessage = await _mediator.Send(new GetTransactionsQuery(), cancellationToken);
-
             return new OkObjectResult(responseMessage);
         }
     }

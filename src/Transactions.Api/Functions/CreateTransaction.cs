@@ -1,17 +1,14 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using MediatR;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Transactions.Api.Command;
 using Transactions.Api.Extensions;
-using System.Threading;
-using System.Text.Json;
 
 namespace Transactions.Api.Functions
 {
@@ -32,14 +29,14 @@ namespace Transactions.Api.Functions
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = Routes.Transactions)] HttpRequest req, CancellationToken cancellationToken = default
           )
         {
-            _logger.LogInformation("C# HTTP trigger function processed a request.");
+            _logger.LogInformation("CreateTransaction function processed a request.");
             var transactionCommand = req.FromBody<CreateTransactionCommand>();
 
             if (transactionCommand == null)
             {
                 return new BadRequestResult();
             }
-            
+
             var responseMessage = _mediator.Send(transactionCommand, cancellationToken);
             return new OkObjectResult(responseMessage.Result);
         }
