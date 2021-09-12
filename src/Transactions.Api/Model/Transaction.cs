@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tansactions.Model
+namespace Tansactions.Api.Model
 {
     public class Transaction
     {
@@ -11,7 +11,7 @@ namespace Tansactions.Model
 
         public string Description { get; set; }
 
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
 
         public DateTime Date { get; set; }
 

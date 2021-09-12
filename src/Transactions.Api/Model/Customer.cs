@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Tansactions.Model
+namespace Tansactions.Api.Model
 {
     public class Customer
     {

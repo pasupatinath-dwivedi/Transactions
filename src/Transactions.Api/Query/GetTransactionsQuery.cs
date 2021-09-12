@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MediatR;
-using Tansactions.Model;
+using Tansactions.Api.Model;
 
 namespace Transactions.Api.Query
 {

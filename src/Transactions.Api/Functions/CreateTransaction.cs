@@ -7,29 +7,41 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using MediatR;
+using Transactions.Api.Command;
+using Transactions.Api.Extensions;
+using System.Threading;
+using System.Text.Json;
 
 namespace Transactions.Api.Functions
 {
-    public static class CreateTransaction
+    public class CreateTransaction
     {
-        //[FunctionName(nameof(CreateTransaction))]
-        //public static async Task<IActionResult> Run(
-        //    [HttpTrigger(AuthorizationLevel.Function, "post", Route = Routes.Transactions)] HttpRequest req,
-        //    ILogger log)
-        //{
-        //    log.LogInformation("C# HTTP trigger function processed a request.");
+        private readonly IMediator _mediator;
+        private readonly ILogger _logger;
 
-        //    string name = req.Query["name"];
 
-        //    string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-        //    dynamic data = JsonConvert.DeserializeObject(requestBody);
-        //    name = name ?? data?.name;
+        public CreateTransaction(IMediator mediator, ILogger<GetTransactions> logger)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        }
 
-        //    string responseMessage = string.IsNullOrEmpty(name)
-        //        ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-        //        : $"Hello, {name}. This HTTP triggered function executed successfully.";
+        [FunctionName(nameof(CreateTransaction))]
+        public async Task<IActionResult> Run(
+            [HttpTrigger(AuthorizationLevel.Function, "post", Route = Routes.Transactions)] HttpRequest req, CancellationToken cancellationToken = default
+          )
+        {
+            _logger.LogInformation("C# HTTP trigger function processed a request.");
+            var transactionCommand = req.FromBody<CreateTransactionCommand>();
 
-        //    return new OkObjectResult(responseMessage);
-        //}
+            if (transactionCommand == null)
+            {
+                return new BadRequestResult();
+            }
+            
+            var responseMessage = _mediator.Send(transactionCommand, cancellationToken);
+            return new OkObjectResult(responseMessage.Result);
+        }
     }
 }

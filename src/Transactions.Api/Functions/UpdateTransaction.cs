@@ -6,30 +6,41 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using MediatR;
+using Transactions.Api.Extensions;
+using Transactions.Api.Command;
+using System.Threading;
 
 namespace Transactions.Api.Functions
 {
-    public static class UpdateTransaction
+    public class UpdateTransaction
     {
-        //[FunctionName(nameof(UpdateTransaction))]
-        //public static async Task<IActionResult> Run(
-        //    [HttpTrigger(AuthorizationLevel.Function, "put", Route = Routes.Update)] HttpRequest req,string transactionID,
-        //    ILogger log)
-        //{
-        //    log.LogInformation("C# HTTP trigger function processed a request.");
 
-        //    string name = req.Query["name"];
+        private readonly IMediator _mediator;
+        private readonly ILogger _logger;
+        public UpdateTransaction(IMediator mediator, ILogger<GetTransactions> logger)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        }
 
-        //    string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-        //    dynamic data = JsonConvert.DeserializeObject(requestBody);
-        //    name = name ?? data?.name;
+        [FunctionName(nameof(UpdateTransaction))]
+        public async Task<IActionResult> Run(
+            [HttpTrigger(AuthorizationLevel.Function, "put", Route = Routes.Update)] HttpRequest req, string transactionID, CancellationToken cancellationToken)
 
-        //    string responseMessage = string.IsNullOrEmpty(name)
-        //        ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-        //        : $"Hello, {name}. This HTTP triggered function executed successfully.";
+        {
+            _logger.LogInformation("C# HTTP trigger function processed a request {transactionId}.", transactionID);
 
-        //    return new OkObjectResult(responseMessage);
-        //}
+            var updateTransactionCommand = req.FromBody<UpdateTransactionCommand>();
+
+            if (updateTransactionCommand == null || !Guid.TryParse(transactionID, out _))
+            {
+                return new BadRequestResult();
+            }
+
+            var result = await _mediator.Send(updateTransactionCommand, cancellationToken);
+
+            return new OkObjectResult(result);
+        }
     }
 }

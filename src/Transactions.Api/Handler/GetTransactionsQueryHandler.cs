@@ -1,29 +1,29 @@
-﻿using System;
+﻿using MediatR;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
-using Tansactions.Model;
+using Tansactions.Api.Model;
 using Transactions.Api.Query;
+using Transactions.Api.Service;
 
 namespace Transactions.Api.Handler
 {
     public class GetTransactionsQueryHandler : IRequestHandler<GetTransactionsQuery, List<Transaction>>
     {
+        private readonly ITransactionDataService _transactionDataService;
+        private readonly ILogger _logger;
+
+        public GetTransactionsQueryHandler(ILogger<GetTransactionsQueryHandler> logger, ITransactionDataService transactionDataService)
+        {
+            _transactionDataService = transactionDataService ?? throw new ArgumentNullException(nameof(transactionDataService));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
         public async Task<List<Transaction>> Handle(GetTransactionsQuery request, CancellationToken cancellationToken)
         {
-             return await Task.Run(()=> new List<Transaction>()
-           {
-               new Transaction()
-               {
-                   Amount =30,
-                   Owner = new Customer()
-                   {
-                       Id = Guid.NewGuid()
-                   }
-               }
-            });
+            _logger.LogInformation("Call db service to get transactions");
+            return await _transactionDataService.GetTransactionsAsync();
         }
     }
 }
